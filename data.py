@@ -31,12 +31,14 @@ def make_dataset(dataset_name, batch_size,img_size,drop_remainder=True, shuffle=
             dataset = datasets.MNIST('data/MNIST', transform=transform, download=True)
         else:
             dataset = datasets.FashionMNIST('data/FashionMNIST', transform=transform, download=True)
+        img_shape = [img_size, img_size, 1]
     elif dataset_name == 'cifar10':
         transform = transforms.Compose([
             transforms.ToTensor(),
             #transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
         dataset = datasets.CIFAR10('data/CIFAR10', transform=transform, download=True)
+        img_shape = [32, 32, 3]
     elif dataset_name == 'pose10':
         transform = transforms.Compose([
             transforms.Resize(size=(img_size, img_size)),
@@ -58,6 +60,7 @@ def make_dataset(dataset_name, batch_size,img_size,drop_remainder=True, shuffle=
             #transforms.ToPILImage()
             ])
         dataset = torchlib.DatasetFromFolder(path='',size=64)
+        img_shape = (6img_size4, img_size, 3)
     else:
         raise NotImplementedError
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, drop_last=drop_remainder, pin_memory=pin_memory)
