@@ -1,6 +1,4 @@
 import functools
-
-import imlib as im
 import numpy as np
 import pylib as py
 import tensorboardX
