@@ -2,7 +2,6 @@ import functools
 import numpy as np
 import tensorboardX
 import torch
-import torchlib
 import tqdm
 import argparse
 import os
