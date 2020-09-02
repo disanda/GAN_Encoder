@@ -171,9 +171,7 @@ z = torch.randn(64, args.z_dim, 1, 1).to(device)  # a fixed noise for sampling
 
 for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
     # train for an epoch
-    for flag,x_real in tqdm.tqdm(data_loader, desc='Inner Epoch Loop'):
-        print(flag.shape)
-        print(x_real.shape)
+    for x_real,flag in tqdm.tqdm(data_loader, desc='Inner Epoch Loop'):
         x_real = x_real.to(device)
         D_loss_dict = train_D(x_real)
         it_d += 1
