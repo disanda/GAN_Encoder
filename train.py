@@ -49,7 +49,6 @@ if not os.path.exists('output'):
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
-
 # save settings
 
 with open(os.path.join(output_dir, 'settings.yml'), "w", encoding="utf-8") as f:
@@ -146,10 +145,10 @@ def sample(z):
 # =                                    run                                     =
 # ==============================================================================
 
-# load checkpoint if exists
 ckpt_dir = os.path.join(output_dir, 'checkpoints')
 if not os.path.exists(ckpt_dir):
     os.mkdir(ckpt_dir)
+
 # try:
 #     ckpt_path = os.path.join(ckpt_dir, 'xxx.ckpt')
 #     ckpt=torch.load(ckpt_path)
@@ -191,5 +190,5 @@ for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
             torchvision.utils.save_image(x_fake,sample_dir+'/ep%d_%d.jpg'%(ep,it_g), nrow=8)
     # save checkpoint
     if (ep+1)%5==0:
-        torch.save(G.state_dict(), ckpt_dir+'Epoch_G_(%d).pth' % ep)
-        torch.save(D.state_dict(), ckpt_dir+'Epoch_D_(%d).pth' % ep)
+        torch.save(G.state_dict(), ckpt_dir+'/Epoch_G_(%d).pth' % ep)
+        torch.save(D.state_dict(), ckpt_dir+'/Epoch_D_(%d).pth' % ep)

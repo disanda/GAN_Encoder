@@ -23,7 +23,7 @@ class DatasetFromFolder(Dataset):
 def make_dataset(dataset_name, batch_size,img_size,drop_remainder=True, shuffle=True, num_workers=4, pin_memory=False,img_paths=''):
     if dataset_name == 'mnist' or dataset_name=='fashion_mnist':
         transform = transforms.Compose([
-            transforms.Resize(size=(32, 32)),
+            transforms.Resize(size=(img_size, img_size)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.5], std=[0.5])
         ])
@@ -31,14 +31,12 @@ def make_dataset(dataset_name, batch_size,img_size,drop_remainder=True, shuffle=
             dataset = datasets.MNIST('data/MNIST', transform=transform, download=True)
         else:
             dataset = datasets.FashionMNIST('data/FashionMNIST', transform=transform, download=True)
-        img_shape = [32, 32, 1]
     elif dataset_name == 'cifar10':
         transform = transforms.Compose([
             transforms.ToTensor(),
             #transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
         dataset = datasets.CIFAR10('data/CIFAR10', transform=transform, download=True)
-        img_shape = [32, 32, 3]
     elif dataset_name == 'pose10':
         transform = transforms.Compose([
             transforms.Resize(size=(img_size, img_size)),
@@ -55,12 +53,11 @@ def make_dataset(dataset_name, batch_size,img_size,drop_remainder=True, shuffle=
         transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Lambda(crop),
-            transforms.Resize(size=(64, 64)),
+            transforms.Resize(size=(img_size, img_size)),
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
             #transforms.ToPILImage()
             ])
         dataset = torchlib.DatasetFromFolder(path='',size=64)
-        img_shape = (64, 64, 3)
     else:
         raise NotImplementedError
     data_loader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, drop_last=drop_remainder, pin_memory=pin_memory)
