@@ -160,6 +160,8 @@ if not os.path.exists(ckpt_dir):
 # except:
 #     ep, it_d, it_g = 0, 0, 0
 
+
+it_d, it_g = 0, 0
 # sample
 sample_dir = os.path.join(output_dir, 'samples_training')
 if not os.path.exists(sample_dir):
@@ -183,7 +185,6 @@ for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
             it_g += 1
             for k, v in G_loss_dict.items():
                 writer.add_scalar('G/%s' % k, v.data.cpu().numpy(), global_step=it_g)
-
         # sample
         if it_g % 100 == 0:
             x_fake = sample(z)
