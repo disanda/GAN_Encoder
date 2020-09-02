@@ -146,17 +146,19 @@ def sample(z):
 # ==============================================================================
 
 # load checkpoint if exists
-ckpt_dir = py.join(output_dir, 'checkpoints')
-py.mkdir(ckpt_dir)
-try:
-    ckpt = torchlib.load_checkpoint(ckpt_dir)
-    ep, it_d, it_g = ckpt['ep'], ckpt['it_d'], ckpt['it_g']
-    D.load_state_dict(ckpt['D'])
-    G.load_state_dict(ckpt['G'])
-    D_optimizer.load_state_dict(ckpt['D_optimizer'])
-    G_optimizer.load_state_dict(ckpt['G_optimizer'])
-except:
-    ep, it_d, it_g = 0, 0, 0
+ckpt_dir = os.path.join(output_dir, 'checkpoints')
+if not os.path.exists(ckpt_dir):
+    os.mkdir(ckpt_dir)
+# try:
+#     ckpt_path = os.path.join(ckpt_dir, 'xxx.ckpt')
+#     ckpt=torch.load(ckpt_path)
+#     ep, it_d, it_g = ckpt['ep'], ckpt['it_d'], ckpt['it_g']
+#     D.load_state_dict(ckpt['D'])
+#     G.load_state_dict(ckpt['G'])
+#     D_optimizer.load_state_dict(ckpt['D_optimizer'])
+#     G_optimizer.load_state_dict(ckpt['G_optimizer'])
+# except:
+#     ep, it_d, it_g = 0, 0, 0
 
 # sample
 sample_dir = os.path.join(output_dir, 'samples_training')
@@ -192,5 +194,5 @@ for ep_ in tqdm.trange(args.epochs, desc='Epoch Loop'):
             torchvision.utils.save_image(x_fake,sample_dir+'/%d.jpg'%(it_g), nrow=8)
     # save checkpoint
     if (ep+1)%5==0:
-        torch.save(G.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep))
-        torch.save(D.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep))
+        torch.save(G.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).pth' % ep))
+        torch.save(D.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).pth' % ep))
