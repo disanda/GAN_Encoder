@@ -162,10 +162,10 @@ if not os.path.exists(ckpt_dir):
 
 # sample
 sample_dir = os.path.join(output_dir, 'samples_training')
-py.mkdir(sample_dir)
+os.mkdir(sample_dir)
 
 # main loop
-writer = tensorboardX.SummaryWriter(py.join(output_dir, 'summaries'))
+writer = tensorboardX.SummaryWriter(os.path.join(output_dir, 'summaries'))
 z = torch.randn(64, args.z_dim, 1, 1).to(device)  # a fixed noise for sampling
 
 for ep_ in tqdm.trange(args.epochs, desc='Epoch Loop'):
