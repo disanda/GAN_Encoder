@@ -19,7 +19,7 @@ import g_penal
 
 # command line
 parser = argparse.ArgumentParser(description='the training args')
-parser.add_argument('--dataset', default='fashion_mnist', choices=['cifar10', 'fashion_mnist', 'mnist', 'celeba', 'anime', 'custom'])
+parser.add_argument('--dataset', default='fashion_mnist')#choices=['cifar10', 'fashion_mnist', 'mnist', 'celeba', 'anime', 'custom'])
 parser.add_argument('--batch_size', type=int, default=64)
 parser.add_argument('--epochs', type=int, default=25)
 parser.add_argument('--lr', type=float, default=0.0002)
@@ -32,7 +32,8 @@ parser.add_argument('--gradient_penalty_sample_mode', default='line', choices=['
 parser.add_argument('--gradient_penalty_weight', type=float, default=10.0)
 parser.add_argument('--experiment_name', default='none')
 parser.add_argument('--gradient_penalty_d_norm', default='layer_norm', choices=['instance_norm', 'layer_norm'])  # !!!
-args = parser.add_argument()
+parser.add_argument('--img_size',type=int,default=64)
+args = parser.parse_args()
 
 # output_dir
 if args.experiment_name == 'none':
@@ -42,7 +43,8 @@ if args.experiment_name == 'none':
 
 output_dir = os.path.join('output', args.experiment_name)
 
-
+if not os.path.exists('output'):
+    os.mkdir('output')
 if not os.path.exists(output_dir):
     os.mkdir(output_dir)
 
@@ -59,8 +61,8 @@ device = torch.device("cuda" if use_gpu else "cpu")
 
 # setup dataset
 
-if args.dataset_name in ['cifar10', 'fashion_mnist', 'mnist']:  # 32x32
-    data_loader, shape = data.make_dataset(args.dataset_name, args.batch_size,args.img_size,pin_memory=use_gpu)
+if args.dataset in ['cifar10', 'fashion_mnist', 'mnist']:  # 32x32
+    data_loader, shape = data.make_dataset(args.dataset, args.batch_size,args.img_size,pin_memory=use_gpu)
     n_G_upsamplings = n_D_downsamplings = 3
 
 
