@@ -194,5 +194,6 @@ for ep_ in tqdm.trange(args.epochs, desc='Epoch Loop'):
             x_fake = sample(z)
             torchvision.utils.save_image(x_fake,sample_dir+'/%d.jpg'%(it_g), nrow=8)
     # save checkpoint
-    torch.save(G.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep)
-    torch.save(D.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep)
+    if (ep+1)%5==0:
+        torch.save(G.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep))
+        torch.save(D.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).ckpt' % ep))
