@@ -162,7 +162,6 @@ if not os.path.exists(ckpt_dir):
 #     ep, it_d, it_g = 0, 0, 0
 
 
-it_d, it_g = 0, 0
 # sample
 sample_dir = os.path.join(output_dir, 'samples_training')
 if not os.path.exists(sample_dir):
@@ -173,7 +172,7 @@ writer = tensorboardX.SummaryWriter(os.path.join(output_dir, 'summaries'))
 z = torch.randn(64, args.z_dim, 1, 1).to(device)  # a fixed noise for sampling
 
 for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
-    # train for an epoch
+    it_d, it_g = 0, 0
     for x_real,flag in tqdm.tqdm(data_loader, desc='Inner Epoch Loop'):
         x_real = x_real.to(device)
         D_loss_dict = train_D(x_real)
@@ -189,7 +188,7 @@ for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
         # sample
         if it_g % 100 == 0:
             x_fake = sample(z)
-            torchvision.utils.save_image(x_fake,sample_dir+'/%d.jpg'%(it_g), nrow=8)
+            torchvision.utils.save_image(x_fake,sample_dir+'/eo%d_%d.jpg'%(ep,it_g), nrow=8)
     # save checkpoint
     if (ep+1)%5==0:
         torch.save(G.state_dict(), os.path.join(ckpt_dir, 'Epoch_(%d).pth' % ep))
