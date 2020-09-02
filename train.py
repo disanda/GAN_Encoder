@@ -9,7 +9,6 @@ import yaml
 
 import data
 import networks
-import torchprob as gan
 import loss_func
 import g_penal
 
