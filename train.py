@@ -63,7 +63,7 @@ device = torch.device("cuda" if use_gpu else "cpu")
 
 if args.dataset in ['cifar10', 'fashion_mnist', 'mnist']:  # 32x32
     data_loader, shape = data.make_dataset(args.dataset, args.batch_size,args.img_size,pin_memory=use_gpu)
-    n_G_upsamplings = n_D_downsamplings = 3
+    n_G_upsamplings = n_D_downsamplings = 4
 
 
 
@@ -173,6 +173,7 @@ z = torch.randn(64, args.z_dim, 1, 1).to(device)  # a fixed noise for sampling
 for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
     it_d, it_g = 0, 0
     for x_real,flag in tqdm.tqdm(data_loader, desc='Inner Epoch Loop'):
+        print(x_real.shape)
         x_real = x_real.to(device)
         D_loss_dict = train_D(x_real)
         it_d += 1
