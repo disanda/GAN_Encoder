@@ -162,7 +162,8 @@ if not os.path.exists(ckpt_dir):
 
 # sample
 sample_dir = os.path.join(output_dir, 'samples_training')
-os.mkdir(sample_dir)
+if not os.path.exists(sample_dir):
+	os.mkdir(sample_dir)
 
 # main loop
 writer = tensorboardX.SummaryWriter(os.path.join(output_dir, 'summaries'))
