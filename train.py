@@ -6,6 +6,7 @@ import tqdm
 import argparse
 import os
 import yaml
+import torchvision
 
 import data
 import networks
