@@ -168,11 +168,7 @@ os.mkdir(sample_dir)
 writer = tensorboardX.SummaryWriter(os.path.join(output_dir, 'summaries'))
 z = torch.randn(64, args.z_dim, 1, 1).to(device)  # a fixed noise for sampling
 
-for ep_ in tqdm.trange(args.epochs, desc='Epoch Loop'):
-    if ep_ < ep:
-        continue
-    ep += 1
-
+for ep in tqdm.trange(args.epochs, desc='Epoch Loop'):
     # train for an epoch
     for x_real in tqdm.tqdm(data_loader, desc='Inner Epoch Loop'):
         x_real = x_real.to(device)
