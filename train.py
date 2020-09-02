@@ -1,6 +1,5 @@
 import functools
 import numpy as np
-import pylib as py
 import tensorboardX
 import torch
 import torchlib
